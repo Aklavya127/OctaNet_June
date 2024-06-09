@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://code.jquery.com/jquery-3.6.0.js"
+        integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="center">
+            <div class="button">
+                <span class="text">My ToDo List</span>
+                <span class="icon"><i class="fas fa-sort-down"></i></span>
+            </div>
+            <div id="MyClockDisplay" class="clock"></div>
+            <div class="field">
+                <input type="text" required placeholder="Add New Tasks....">
+                <span class="add-btn">ADD</span>
+            </div>
+            <ul>
+                <li><span><i class="fas fa-trash"></i></span>Guitar Practice</li>
+                <li><span><i class="fas fa-trash"></i></span>Attend Meeting</li>
+                <li><span><i class="fas fa-trash"></i></span>Paying Bills</li>
+                <li><span><i class="fas fa-trash"></i></span>Complete Assignments</li>
+                <li><span><i class="fas fa-trash"></i></span>Gym</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            $('.add-btn').click(function () {
+                let task = $('input').val().trim();
+                if (task !== '') {
+                    $('ul').append("<li><span><i class='fas fa-trash'></i></span>" + task + "</li>");
+                    $('input').val("");
+                }
+            });
+
+            $('ul').on("click", 'span', function () {
+                $(this).parent().fadeOut(500, function () {
+                    $(this).remove();
+                });
+            });
+
+            $('.icon').click(function () {
+                $('.field').toggleClass("hide");
+            });
+
+            function showTime() {
+                let date = new Date();
+                let h = date.getHours();
+                let m = date.getMinutes();
+                let s = date.getSeconds();
+                let session = "AM";
+
+                if (h == 0) {
+                    h = 12;
+                }
+
+                if (h > 12) {
+                    h -= 12;
+                    session = "PM";
+                }
+
+                h = (h < 10) ? "0" + h : h;
+                m = (m < 10) ? "0" + m : m;
+                s = (s < 10) ? "0" + s : s;
+
+                let time = h + ":" + m + ":" + s + " " + session;
+                $("#MyClockDisplay").text(time);
+
+                setTimeout(showTime, 1000);
+            }
+
+            showTime();
+        });
+    </script>
+
+</body>
+
+</html>
